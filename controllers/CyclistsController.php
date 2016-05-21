@@ -9,6 +9,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\db\Query;
+use yii\filters\AccessControl;
 
 /**
  * CyclistsController implements the CRUD actions for Cyclists model.
@@ -27,6 +28,22 @@ class CyclistsController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['update','delete'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'actions' => ['update'],
+                        'roles' => ['@'],
+                    ],
+                    [
+                        'allow' => false,
+                        'actions' => ['delete'],
+                        'roles' => ['?'],
+                    ]
+                ]
+            ]
         ];
     }
 
